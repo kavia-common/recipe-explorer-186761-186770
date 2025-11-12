@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recipe Explorer (Next.js)
+
+A modern, Ocean-themed recipe explorer with browsing, search, and detailed views.
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Open http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pages & Routing
 
-## Learn More
+- `/` – Home with featured recipes and search bar in header.
+- `/search?query=term` – Search results grid.
+- `/recipe/[id]` – Recipe details page with ingredients and steps.
 
-To learn more about Next.js, take a look at the following resources:
+## Theme
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ocean Professional theme:
+- primary: `#2563EB`, secondary/success: `#F59E0B`, error: `#EF4444`
+- gradient: `from-blue-500/10 to-gray-50`, background: `#f9fafb`, surface: `#ffffff`, text: `#111827`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Data Layer and Environment
 
-## Deploy on Vercel
+The app will read a backend API base from:
+- `NEXT_PUBLIC_API_BASE`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+When this variable is not set or a network/error occurs, the app gracefully falls back to mock data located at `src/data/mockRecipes.ts`. This ensures the UI remains functional in preview and development.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Example `.env.local`:
+```
+NEXT_PUBLIC_API_BASE=https://your-backend.example.com
+```
+
+Expected endpoints if API is used:
+- `GET /recipes/featured`
+- `GET /recipes/search?q=term`
+- `GET /recipes/:id`
+
+If your backend differs, adjust the client at `src/lib/api.ts`.
+
+Note: No new environment variables are introduced beyond the existing keys. If `NEXT_PUBLIC_API_BASE` is not provided, mock data will be used automatically.
+
+## Accessibility & UX
+
+- Semantic headings and landmarks.
+- Keyboard-accessible, labeled search form in the header.
+- Loading and empty states for all data views.
+
+## Project Scripts
+
+- `npm run dev` – Start dev server.
+- `npm run build` – Build for production.
+- `npm start` – Start production server.
+
