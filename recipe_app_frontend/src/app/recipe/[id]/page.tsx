@@ -1,5 +1,6 @@
 import { getRecipeById } from "@/lib/api";
 import EmptyState from "@/components/EmptyState";
+import { mockRecipes } from "@/data/mockRecipes";
 
 /**
 PUBLIC_INTERFACE
@@ -14,7 +15,16 @@ We intentionally avoid importing PageProps typing because Next.js v15 may type `
 as a Promise in types-only constraints. Using `any` props and runtime normalization
 prevents type errors during build while preserving strong typing in the data layer.
 */
-export const dynamic = "force-dynamic";
+
+// PUBLIC_INTERFACE
+export const dynamicParams = false;
+/**
+Generate static params for recipe detail pages using mock data to enable full static export.
+This ensures Next can pre-render pages for known recipes at build time.
+*/
+export async function generateStaticParams() {
+  return mockRecipes.map((r) => ({ id: r.id }));
+}
 
 type ParamsObject = { id?: string };
 

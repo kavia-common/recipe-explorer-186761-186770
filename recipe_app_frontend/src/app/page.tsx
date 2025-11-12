@@ -4,8 +4,6 @@ import Loading from "@/components/Loading";
 import EmptyState from "@/components/EmptyState";
 import { getFeaturedRecipes } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
-
 export default async function Home() {
   const data = await getFeaturedRecipes();
 
